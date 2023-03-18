@@ -1030,11 +1030,16 @@ int main(int argc, char ** argv) {
             }
         }
 
-        // end of text token
+         // end of text token - Prevent premature end of completion.
         if (embd.back() == 2) {
             fprintf(stderr, " [end of text]\n");
-            break;
-        }
+            char answer = 'n';   
+            if (answer == '\n' || answer == 'Y' || answer == 'y') {
+                break;
+            }
+            embd.back() = 13;
+            last_n_tokens.back() = 13;
+        } 
     }
 
 #if defined (_WIN32)
